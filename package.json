@@ -1,0 +1,26 @@
+{
+  "name": "single-upload-be",
+  "version": "1.0.0",
+  "description": "",
+  "main": "storeVideo.js",
+  "dependencies": {
+    "express": "^4.17.3",
+    "fs": "^0.0.1-security",
+    "mongodb": "^4.5.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node storeVideo.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roxkstar74/single-upload.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/roxkstar74/single-upload/issues"
+  },
+  "homepage": "https://github.com/roxkstar74/single-upload#readme"
+}
