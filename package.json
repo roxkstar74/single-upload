@@ -5,8 +5,10 @@
   "main": "storeVideo.js",
   "dependencies": {
     "express": "^4.17.3",
+    "express-fileupload": "^1.3.1",
     "fs": "^0.0.1-security",
-    "mongodb": "^4.5.0"
+    "mongodb": "^4.5.0",
+    "stream": "0.0.2"
   },
   "devDependencies": {},
   "scripts": {

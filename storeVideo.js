@@ -1,8 +1,26 @@
 const mongodb = require('mongodb');
 const {MongoClient} = mongodb;
-const fs = require('fs');
 const express = require('express');
 const app = express();
+const fileUpload = require('express-fileupload');
+app.use(fileUpload());
+
+const { Readable } = require('stream');
+  /**
+   * @param binary Buffer
+   * returns readableInstanceStream Readable
+   */
+  function bufferToStream(binary) {
+  
+      const readableInstanceStream = new Readable({
+        read() {
+          this.push(binary);
+          this.push(null);
+        }
+      });
+  
+      return readableInstanceStream;
+  }
 
 // Connection URL
 const url = `mongodb+srv://spaghetti:${process.env.MONGO_PW}@igcluster.u0lmv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
@@ -10,9 +28,9 @@ const client = new MongoClient(url);
 
 const upload = async function (req, res) {
 
-  const fileName = req.query.name;
-  const filePath = req.query.path;
-  console.log(fileName, filePath);
+  const fileName = req.files.video.name;  
+  const videoData = req.files.video.data;
+  console.log(fileName, videoData);
 
   mongodb.MongoClient.connect(url, function (error, client) {
     if (error) {
@@ -32,7 +50,7 @@ const upload = async function (req, res) {
     console.log('streamin video');
 
     // You can put your file instead of bigbuck.mp4
-    const videoReadStream = fs.createReadStream(filePath);
+    const videoReadStream = bufferToStream(videoData);
     console.log('made stream');
 
     // Finally Upload!
@@ -72,7 +90,7 @@ const download = async (req, res) => {
   };  
 
 app.get('/file/:name', download);
-app.get('/upload', upload);
+app.post('/upload', upload);
 app.get('/', (req, res) => {
   res.send('Single upload running properly!');
 });
