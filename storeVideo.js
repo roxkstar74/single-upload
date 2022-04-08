@@ -73,4 +73,7 @@ const download = async (req, res) => {
 
 app.get('/file/:name', download);
 app.get('/upload', upload);
+app.get('/', (req, res) => {
+  res.send('Single upload running properly!');
+});
 app.listen(process.env.PORT || 3000, () => console.log(`single upload app listening on port ${process.env.PORT || 3000}!`));
