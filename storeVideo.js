@@ -3,6 +3,10 @@ const {MongoClient} = mongodb;
 const express = require('express');
 const app = express();
 const fileUpload = require('express-fileupload');
+const dotenv = require('dotenv');
+const cors = require('cors');
+app.use(cors());
+dotenv.config();
 app.use(fileUpload());
 
 const { Readable } = require('stream');
@@ -23,7 +27,7 @@ const { Readable } = require('stream');
   }
 
 // Connection URL
-const url = `mongodb+srv://spaghetti:${process.env.MONGO_PW}@igcluster.u0lmv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+const url = `mongodb+srv://spaghetti3:${process.env.MONGO_PW}@igcluster.u0lmv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 const client = new MongoClient(url);
 
 const upload = async function (req, res) {
@@ -35,6 +39,7 @@ const upload = async function (req, res) {
   mongodb.MongoClient.connect(url, function (error, client) {
     if (error) {
       console.log(error);
+      console.log('failed to connect');
       return;
     }
 
@@ -67,6 +72,7 @@ const download = async (req, res) => {
       await client.connect();
       const database = client.db('videos');
       const bucket = new mongodb.GridFSBucket(database);
+      console.log('DOWNLOAD REQUESTED FOR: ', req.params.name);
       let downloadStream = bucket.openDownloadStreamByName(req.params.name);
       downloadStream.on("data", function (data) {
         return res.status(200).write(data);
