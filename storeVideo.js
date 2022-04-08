@@ -63,7 +63,7 @@ const upload = async function (req, res) {
     console.log('piped');
 
     // All done!
-    res.status(200).send('done');
+    res.status(200).send({'name': fileName});
   });
 }
 
